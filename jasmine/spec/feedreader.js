@@ -32,7 +32,7 @@ $(function () {
      */
     describe('urls', function () {
       it('are defined and are not empty', function () {
-        allFeeds.forEach((feed) => {
+        allFeeds.forEach(feed => {
           expect(feed.url).toBeDefined();
           expect(feed.url).toBeTruthy();
         });
@@ -45,7 +45,7 @@ $(function () {
      */
     describe('name', function () {
       it('is defined and is not empty', function () {
-        allFeeds.forEach((feed) => {
+        allFeeds.forEach(feed => {
           expect(feed.name).toBeDefined();
           expect(feed.name).toBeTruthy();
         });
@@ -58,11 +58,11 @@ $(function () {
     /*
      * Ensures the menu element is hidden by default.
      */
-    const menu = $('.menu-hidden');
+    const menu = $('body').hasClass('menu-hidden');
     const menuIcon = $('.menu-icon-link');
 
     it('is hidden', function () {
-      expect(menu.attr('class')).toEqual('menu-hidden');
+      expect(menu).toBe(true);
     });
 
     /* Ensures the menu changes visibility when the menu icon is clicked.
@@ -71,9 +71,9 @@ $(function () {
      */
     it('toggles visibility', function () {
       menuIcon.click();
-      expect(menu.attr('class')).not.toEqual('menu-hidden');
+      expect($('body').hasClass('menu-hidden')).toBe(false);
       menuIcon.click();
-      expect(menu.attr('class')).toEqual('menu-hidden');
+      expect(menu).toBe(true);
     });
   });
 
@@ -85,13 +85,11 @@ $(function () {
 
     //waits for async call to finish to ensure feeds are loaded before they are tested
     beforeEach(function (done) {
-      loadFeed(0, function () {
-        done();
-      });
+      loadFeed(0, done);
     });
 
     it('feed container has at least one entry', function () {
-      const numberOfEntries = $('.entry').length;
+      const numberOfEntries = $('.feed .entry').length;
 
       expect(numberOfEntries).toBeGreaterThan(0);
     });
