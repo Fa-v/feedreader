@@ -13,7 +13,7 @@ $(function () {
    * a related set of tests. This suite is all about the RSS
    * feeds definitions, the allFeeds variable in our application.
    */
-  describe('RSS Feeds', function () {
+  describe('RSS Feeds', () => {
     /* This is our first test - it tests to make sure that the
      * allFeeds variable has been defined and that it is not
      * empty. Experiment with this before you get started on
@@ -21,7 +21,7 @@ $(function () {
      * allFeeds in app.js to be an empty array and refresh the
      * page?
      */
-    it('are defined', function () {
+    it('are defined', () => {
       expect(allFeeds).toBeDefined();
       expect(allFeeds.length).not.toBe(0);
     });
@@ -30,8 +30,8 @@ $(function () {
      * in the allFeeds object and ensures it has a URL defined
      * and that the URL is not empty.
      */
-    describe('urls', function () {
-      it('are defined and are not empty', function () {
+    describe('urls', () => {
+      it('are defined and are not empty', () => {
         allFeeds.forEach(feed => {
           expect(feed.url).toBeDefined();
           expect(feed.url).toBeTruthy();
@@ -43,8 +43,8 @@ $(function () {
      * in the allFeeds object and ensures it has a name defined
      * and that the name is not empty.
      */
-    describe('name', function () {
-      it('is defined and is not empty', function () {
+    describe('name', () => {
+      it('is defined and is not empty', () => {
         allFeeds.forEach(feed => {
           expect(feed.name).toBeDefined();
           expect(feed.name).toBeTruthy();
@@ -54,41 +54,37 @@ $(function () {
   });
 
   /* New test suite named "The menu" */
-  describe('The menu', function () {
+  describe('The menu', () => {
     /*
      * Ensures the menu element is hidden by default.
      */
     const menu = $('body').hasClass('menu-hidden');
     const menuIcon = $('.menu-icon-link');
 
-    it('is hidden', function () {
-      expect(menu).toBe(true);
-    });
+    it('is hidden', () => expect(menu).toBe(true));
 
     /* Ensures the menu changes visibility when the menu icon is clicked.
      * This test should has two expectations: does the menu display when
      * clicked and does it hide when clicked again.
      */
-    it('toggles visibility', function () {
+    it('toggles visibility', () => {
       menuIcon.click();
       expect($('body').hasClass('menu-hidden')).toBe(false);
       menuIcon.click();
-      expect(menu).toBe(true);
+      expect($('body').hasClass('menu-hidden')).toBe(true);
     });
   });
 
   /* New test suite named "Initial Entries" */
-  describe('Initial Entries', function () {
+  describe('Initial Entries', () => {
     /* Ensures when the loadFeed function is called and completes its work,
      * there is at least a single .entry element within the .feed container.
      */
 
     //waits for async call to finish to ensure feeds are loaded before they are tested
-    beforeEach(function (done) {
-      loadFeed(0, done);
-    });
+    beforeEach(done => loadFeed(0, done));
 
-    it('feed container has at least one entry', function () {
+    it('feed container has at least one entry', () => {
       const numberOfEntries = $('.feed .entry').length;
 
       expect(numberOfEntries).toBeGreaterThan(0);
@@ -96,7 +92,7 @@ $(function () {
   });
 
   /* New test suite named "New Feed Selection" */
-  describe('New Feed Selection', function () {
+  describe('New Feed Selection', () => {
     let firstEntry;
     let newEntry;
     /* Ensures when a new feed is loaded by the loadFeed function that the
@@ -104,20 +100,18 @@ $(function () {
      */
 
     //waits for async call to finish
-    beforeEach(function (done) {
-      loadFeed(1, function () {
+    beforeEach(done => {
+      loadFeed(1, () => {
         firstEntry = $('.feed').html();
 
-        loadFeed(2, function () {
-          done();
-        });
+        loadFeed(2, () => done());
       });
     });
 
     /* First checks of the firstEntry is defined. Then, looks that firstEntry
      * and newEntry are not equal.
      */
-    it('firstEntry and newEntry content is not equal', function () {
+    it('firstEntry and newEntry content is not equal', () => {
       expect(firstEntry).toBeDefined();
       newEntry = $('.feed').html();
       expect(newEntry).toBeDefined();
